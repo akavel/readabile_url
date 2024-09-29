@@ -1,12 +1,23 @@
+use std::process;
+
 fn main() {
-    println!("Hello, world!");
-    match readability::extractor::scrape("https://akavel.com/solo-nondisappointed") {
+    let mut args = std::env::args();
+    let _ = args.next(); // skip name of binary
+    if args.len() != 1 {
+        eprintln!(
+            "readabile_url expects exactly 1 argument, an URL; got {} args",
+            args.len()
+        );
+        process::exit(1);
+    }
+    let url = args.next().unwrap();
+    match readability::extractor::scrape(&url) {
         Ok(product) => {
-            println!("------- html ------");
             println!("{}", product.content);
-            println!("---- plain text ---");
-            println!("{}", product.text);
         }
-        Err(_) => println!("error occured"),
+        Err(err) => {
+            eprintln!("readabile_url error: {}", err);
+            process::exit(1);
+        }
     }
 }
