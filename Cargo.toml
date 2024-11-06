@@ -5,5 +5,5 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0.92"
-readability = { version = "0.3.0", default-features = false }
+readability = { default-features = false, git = "https://github.com/akavel/readability" }
 reqwest = { version = "0.12.9", features = ["blocking"] }
